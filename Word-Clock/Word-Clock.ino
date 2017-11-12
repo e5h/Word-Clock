@@ -31,12 +31,25 @@ void loop() {
   //wipe();
   //display_time();
   //grid.show();
+  snake(grid.Color(0, 255, 255), 5);
   test_letters(grid.Color(0, 255, 255), 750);
+
+  snake(grid.Color(0, 0, 255), 5);
   test_letters(grid.Color(0, 0, 255), 100);
+
+  snake(grid.Color(255, 0, 255), 5);
   test_letters(grid.Color(255, 0, 255), 75);
+
+  snake(grid.Color(255, 0, 0), 5);
   test_letters(grid.Color(255, 0, 0), 50);
+
+  snake(grid.Color(255, 128, 0), 5);
   test_letters(grid.Color(255, 128, 0), 25);
+
+  snake(grid.Color(255, 255, 0), 5);
   test_letters(grid.Color(255, 255, 0), 15);
+
+  snake(grid.Color(0, 255, 0), 5);
   test_letters(grid.Color(0, 255, 0), 10);
 }
 
@@ -61,6 +74,15 @@ void wipe(int t){
 //Interfaces with the RTC to determine what to display.
 void display_time(){
   happy(grid.Color(0, 255, 255));
+}
+
+//For fun.
+void snake(uint32_t c, int t){
+  wipe();
+  for(int i = 0; i < LENGTH; i++){
+    grid.setPixelColor(i, c);
+    wipe(t);
+  }
 }
 
 //Testing each word.
