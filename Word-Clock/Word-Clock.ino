@@ -1,4 +1,7 @@
 #include <Adafruit_NeoPixel.h>
+#include <Wire.h>
+#include "RTClib.h"
+
 /* -------------------9-
  * --n---n---n---n---n--
  *  I T U I S H A P P Y
@@ -18,39 +21,22 @@
 //Preliminary definitions.
 #define PIN 6
 #define LENGTH 100
+RTC_PCF8523 rtc;
 
 //Initialize the LED grid.
 Adafruit_NeoPixel grid = Adafruit_NeoPixel(LENGTH, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
+  Serial.begin(57600);
+  rtc.begin();
   grid.begin();
   grid.show();
 }
 
 void loop() {
-  //wipe();
-  //display_time();
-  //grid.show();
-  snake(grid.Color(0, 255, 255), 5);
-  test_letters(grid.Color(0, 255, 255), 750);
-
-  snake(grid.Color(0, 0, 255), 5);
-  test_letters(grid.Color(0, 0, 255), 100);
-
-  snake(grid.Color(255, 0, 255), 5);
-  test_letters(grid.Color(255, 0, 255), 75);
-
-  snake(grid.Color(255, 0, 0), 5);
-  test_letters(grid.Color(255, 0, 0), 50);
-
-  snake(grid.Color(255, 128, 0), 5);
-  test_letters(grid.Color(255, 128, 0), 25);
-
-  snake(grid.Color(255, 255, 0), 5);
-  test_letters(grid.Color(255, 255, 0), 15);
-
-  snake(grid.Color(0, 255, 0), 5);
-  test_letters(grid.Color(0, 255, 0), 10);
+  wipe();
+  display_time(grid.Color(0, 255, 255), grid.Color(0, 255, 0));
+  grid.show();  
 }
 
 //----------------------------------------------------------------------------------------------
@@ -64,109 +50,147 @@ void wipe(){
   }
 }
 
-//Overloaded. Shows current display for 't' ms, and wipes again.
-void wipe(int t){
-  grid.show();
-  delay(t);
-  wipe();
+//Returns integer value of the minute.
+int get_min(void){
+  int m;
+  m = (int)rtc.now().minute();
+  return m;
 }
 
-//Interfaces with the RTC to determine what to display.
-void display_time(){
-  happy(grid.Color(0, 255, 255));
+//Returns integer value of the hour.
+int get_hour(void){
+  int h;
+  h = (int)rtc.now().hour();
+  return h;
 }
 
-//For fun.
-void snake(uint32_t c, int t){
-  wipe();
-  for(int i = 0; i < LENGTH; i++){
-    grid.setPixelColor(i, c);
-    wipe(t);
+//Interfaces with the RTC to determine what to display based on current time.
+//Five minute intervals, with different hour depending on the "half" of the current hour.
+void display_time(uint32_t c, uint32_t hc){
+  it(c);
+  is(c);
+  
+  if(get_min() >= 0 && get_min() < 5){
+    display_hour(get_hour(), hc);
+  }
+
+  if(get_min() >= 5 && get_min() < 10){
+    five_t(c);
+    past(c);
+    display_hour(get_hour(), hc);
+  }
+
+  if(get_min() >= 10 && get_min() < 15){
+    ten_t(c);
+    past(c);
+    display_hour(get_hour(), hc);
+  }
+
+  if(get_min() >= 15 && get_min() < 20){
+    a(c);
+    quarter(c);
+    past(c);
+    display_hour(get_hour(), hc);
+  }
+
+  if(get_min() >= 20 && get_min() < 25){
+    twenty(c);
+    past(c);
+    display_hour(get_hour(), hc);
+  }
+
+  if(get_min() >= 25 && get_min() < 30){
+    twenty(c);
+    five_t(c);
+    past(c);
+    display_hour(get_hour(), hc);
+  }
+
+  if(get_min() >= 30 && get_min() < 35){
+    half(c);
+    past(c);
+    display_hour(get_hour(), hc);
+  }
+
+  if(get_min() >= 35 && get_min() < 40){
+    twenty(c);
+    five_t(c);
+    to(c);
+    display_hour(get_hour() + 1, hc);
+  }
+
+  if(get_min() >= 40 && get_min() < 45){
+    twenty(c);
+    to(c);
+    display_hour(get_hour() + 1, hc);
+  }
+
+  if(get_min() >= 45 && get_min() < 50){
+    a(c);
+    quarter(c);
+    to(c);
+    display_hour(get_hour() + 1, hc);
+  }
+
+  if(get_min() >= 50 && get_min() < 55){
+    ten_t(c);
+    to(c);
+    display_hour(get_hour() + 1, hc);
+  }
+
+  if(get_min() >= 55 && get_min() < 60){
+    five_t(c);
+    to(c);
+    display_hour(get_hour() + 1, hc);
+  }
+  
+}
+
+//Takes a numeric hour, and displays the corresponding word.
+void display_hour(int h, uint32_t c){
+  if(h > 12)
+    h -= 12;
+  
+  if(h == 1){
+    one(c);
+  }
+  if(h == 2){
+    two(c);
+  }
+  if(h == 3){
+    three(c);
+  }
+  if(h == 4){
+    four(c);
+  }
+  if(h == 5){
+    five_b(c);
+  }
+  if(h == 6){
+    six(c);
+  }
+  if(h == 7){
+    seven(c);
+  }
+  if(h == 8){
+    eight(c);
+  }
+  if(h == 9){
+    nine(c);
+  }
+  if(h == 10){
+    ten_b(c);
+  }
+  if(h == 11){
+    eleven(c);
+  }
+  if(h == 12){
+    twelve(c);
   }
 }
 
-//Testing each word.
-void test_letters(uint32_t c, int t){
-  it(c);
-  wipe(t);
-  
-  is(c);
-  wipe(t);
-  
-  happy(c);
-  wipe(t);
-  
-  twenty(c);
-  wipe(t);
-  
-  half(c);
-  wipe(t);
-  
-  bday(c);
-  wipe(t);
-  
-  five_t(c);
-  wipe(t);
-  
-  ten_t(c);
-  wipe(t);
-  
-  quarter(c);
-  wipe(t);
-  
-  to(c);
-  wipe(t);
-  
-  past(c);
-  wipe(t);
-  
-  papa(c);
-  wipe(t);
-
-  granny(c);
-  wipe(t);
-  
-
-  one(c);
-  wipe(t);
-  
-  two(c);
-  wipe(t);
-  
-  three(c);
-  wipe(t);
-  
-  four(c);
-  wipe(t);
-  
-  five_b(c);
-  wipe(t);
-  
-  six(c);
-  wipe(t);
-  
-  seven(c);
-  wipe(t);
-  
-  eight(c);
-  wipe(t);
-  
-  nine(c);
-  wipe(t);
-  
-  ten_b(c);
-  wipe(t);
-  
-  eleven(c);
-  wipe(t);
-  
-  twelve(c);
-  wipe(t);
-  
-}
-
 //----------------------------------------------------------------------------------------------
-//WORD FUNCTIONS
+//INDIVIDUAL WORD FUNCTIONS
 //TEMPORARY, MOVE TO HEADER
 
 void it(uint32_t c){
@@ -177,6 +201,10 @@ void it(uint32_t c){
 void is(uint32_t c){
   grid.setPixelColor(69, c);
   grid.setPixelColor(50, c);
+}
+
+void a(uint32_t c){
+  grid.setPixelColor(28, c);
 }
 
 void happy(uint32_t c){
@@ -348,3 +376,101 @@ void twelve(uint32_t c){
   grid.setPixelColor(40, c);
 }
 
+//----------------------------------------------------------------------------------------------
+//FOR FUN / TESTING
+
+//For fun.
+void snake(uint32_t c, int t){
+  wipe();
+  for(int i = 0; i < LENGTH; i++){
+    grid.setPixelColor(i, c);
+    wipe(t);
+  }
+}
+
+//Overloaded. Shows current display for 't' ms, and wipes again.
+void wipe(int t){
+  grid.show();
+  delay(t);
+  wipe();
+}
+
+//Testing each word.
+void test_words(uint32_t c, int t){
+  it(c);
+  wipe(t);
+  
+  is(c);
+  wipe(t);
+  
+  happy(c);
+  wipe(t);
+  
+  twenty(c);
+  wipe(t);
+  
+  half(c);
+  wipe(t);
+  
+  bday(c);
+  wipe(t);
+  
+  five_t(c);
+  wipe(t);
+  
+  ten_t(c);
+  wipe(t);
+  
+  quarter(c);
+  wipe(t);
+  
+  to(c);
+  wipe(t);
+  
+  past(c);
+  wipe(t);
+  
+  papa(c);
+  wipe(t);
+
+  granny(c);
+  wipe(t);
+  
+
+  one(c);
+  wipe(t);
+  
+  two(c);
+  wipe(t);
+  
+  three(c);
+  wipe(t);
+  
+  four(c);
+  wipe(t);
+  
+  five_b(c);
+  wipe(t);
+  
+  six(c);
+  wipe(t);
+  
+  seven(c);
+  wipe(t);
+  
+  eight(c);
+  wipe(t);
+  
+  nine(c);
+  wipe(t);
+  
+  ten_b(c);
+  wipe(t);
+  
+  eleven(c);
+  wipe(t);
+  
+  twelve(c);
+  wipe(t);
+  
+}
