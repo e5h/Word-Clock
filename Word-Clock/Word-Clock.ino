@@ -21,14 +21,13 @@
 //Preliminary definitions.
 #define PIN 6
 #define LENGTH 100
-RTC_PCF8523 rtc;
+RTC_DS1307 rtc;
 
 //Initialize the LED grid.
 Adafruit_NeoPixel grid = Adafruit_NeoPixel(LENGTH, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
-  Serial.begin(57600);
-  rtc.begin();
+  Wire.begin();  
   grid.begin();
   grid.show();
 }
@@ -395,12 +394,15 @@ void wipe(int t){
   wipe();
 }
 
-//Testing each word.
+//Tests each word, using a color "c" and a time delay of "t" ms between each.
 void test_words(uint32_t c, int t){
   it(c);
   wipe(t);
   
   is(c);
+  wipe(t);
+
+  a(c);
   wipe(t);
   
   happy(c);
@@ -436,7 +438,6 @@ void test_words(uint32_t c, int t){
   granny(c);
   wipe(t);
   
-
   one(c);
   wipe(t);
   
