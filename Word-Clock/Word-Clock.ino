@@ -21,21 +21,27 @@
 //Preliminary definitions.
 #define PIN 6
 #define LENGTH 100
+#define BUTTON_DELAY 50
 RTC_DS1307 rtc;
 
 //Initialize the LED grid.
 Adafruit_NeoPixel grid = Adafruit_NeoPixel(LENGTH, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
+  Serial.begin(57600);
   Wire.begin();  
   grid.begin();
   grid.show();
+
+  pinMode(8, INPUT);
+  pinMode(9, INPUT);
 }
 
 void loop() {
   wipe();
   display_time(grid.Color(0, 255, 255), grid.Color(0, 255, 0));
-  grid.show();  
+  grid.show();
+  check_buttons();
 }
 
 //----------------------------------------------------------------------------------------------
@@ -47,6 +53,39 @@ void wipe(){
   for(int i = 0; i < LENGTH; i++){
     grid.setPixelColor(i, grid.Color(0, 0, 0));
   }
+}
+
+//Checks the button states.
+void check_buttons(){
+  static unsigned long last_time = 0;
+  static int last_state[2] = {0, 0};
+  int add_btn = digitalRead(9);
+  int sub_btn = digitalRead(8);
+
+  if(millis() - last_time > BUTTON_DELAY){
+    
+    if(add_btn == 1 && add_btn != last_state[0]){
+      last_time = millis();
+      add_min();
+    }
+
+    if(sub_btn == 1 && sub_btn != last_state[1]){
+      last_time = millis();
+      sub_min();
+    }
+  }
+
+  last_state[0] = add_btn;
+  last_state[1] = sub_btn;
+  
+}
+
+void add_min(){
+  Serial.println("Minute added.");
+}
+
+void sub_min(){
+  Serial.println("Minute subtracted.");
 }
 
 //Returns integer value of the minute.
