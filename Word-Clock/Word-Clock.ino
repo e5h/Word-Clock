@@ -22,16 +22,19 @@
 #define PIN 6
 #define LENGTH 100
 #define BUTTON_DELAY 50
-RTC_DS1307 rtc;
+#define RAINBOW_DELAY 150
+RTC_DS3231 rtc;
 
 //Initialize the LED grid.
 Adafruit_NeoPixel grid = Adafruit_NeoPixel(LENGTH, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
-  Serial.begin(57600);
-  Wire.begin();  
+  Serial.begin(9600);
+  Wire.begin();
   grid.begin();
   grid.show();
+  //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  rtc.adjust(DateTime(2017, 7, 30, 7, 35, 0)); //manual adjustment
 
   pinMode(8, INPUT);
   pinMode(9, INPUT);
@@ -40,13 +43,13 @@ void setup() {
 void loop() {
   wipe();
   display_time(grid.Color(0, 255, 255), grid.Color(0, 255, 0));
-  grid.show();
+  display_bday();
   check_buttons();
+  grid.show();
 }
 
 //----------------------------------------------------------------------------------------------
 //UTILITY FUNCTIONS
-//TEMPORARY, MOVE TO HEADER
 
 //Turns all pixels off
 void wipe(){
@@ -59,33 +62,35 @@ void wipe(){
 void check_buttons(){
   static unsigned long last_time = 0;
   static int last_state[2] = {0, 0};
-  int add_btn = digitalRead(9);
-  int sub_btn = digitalRead(8);
+  int up_btn = digitalRead(9);
+  int down_btn = digitalRead(8);
 
   if(millis() - last_time > BUTTON_DELAY){
     
-    if(add_btn == 1 && add_btn != last_state[0]){
+    if(up_btn == 1 && up_btn != last_state[0]){
       last_time = millis();
-      add_min();
+      add_sec();
     }
 
-    if(sub_btn == 1 && sub_btn != last_state[1]){
+    if(down_btn == 1 && down_btn != last_state[1]){
       last_time = millis();
-      sub_min();
+      sub_sec();
     }
   }
 
-  last_state[0] = add_btn;
-  last_state[1] = sub_btn;
+  last_state[0] = up_btn;
+  last_state[1] = down_btn;
   
 }
 
-void add_min(){
-  Serial.println("Minute added.");
+//Adds a second to the RTC time.
+void add_sec(){
+  rtc.adjust(DateTime(rtc.now().unixtime() + 1));
 }
 
-void sub_min(){
-  Serial.println("Minute subtracted.");
+//Subtracts a second from the RTC time.
+void sub_sec(){
+  rtc.adjust(DateTime(rtc.now().unixtime() - 1));
 }
 
 //Returns integer value of the minute.
@@ -100,6 +105,49 @@ int get_hour(void){
   int h;
   h = (int)rtc.now().hour();
   return h;
+}
+
+//Checks to see if birthdays are active, and sets rainbow text if so.
+void display_bday(){
+  //Nov 29
+  if(rtc.now().month() == 11 && rtc.now().day() == 29){
+    happy(rainbow());
+    bday(rainbow());
+    papa(rainbow());
+  }
+  //July 30
+  if(rtc.now().month() == 7 && rtc.now().day() == 30){
+    happy(rainbow());
+    bday(rainbow());
+    granny(rainbow());
+  }
+}
+
+//Cycles through RGB values.
+uint32_t rainbow(){
+  static unsigned long last_time = 0;
+  static byte incr = 0;
+
+  if(millis() - last_time > RAINBOW_DELAY){
+    if(incr < 255){
+      incr++;
+    }
+    else{
+      incr = 0;
+    }
+
+    last_time = millis();
+  }
+
+  if(incr > 170) {
+    return grid.Color((incr - 170) * 3, 0, 255 - (incr - 170) * 3);
+  }
+  if(incr > 85) {
+    return grid.Color(0, 255 - (incr - 85) * 3, (incr - 85) * 3);
+  }
+  else{
+    return grid.Color(255 - incr * 3, incr * 3, 0);
+  }
 }
 
 //Interfaces with the RTC to determine what to display based on current time.
@@ -229,7 +277,6 @@ void display_hour(int h, uint32_t c){
 
 //----------------------------------------------------------------------------------------------
 //INDIVIDUAL WORD FUNCTIONS
-//TEMPORARY, MOVE TO HEADER
 
 void it(uint32_t c){
   grid.setPixelColor(90, c);
