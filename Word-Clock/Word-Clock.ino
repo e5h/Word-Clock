@@ -34,7 +34,7 @@ void setup() {
   grid.begin();
   grid.show();
   //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-  rtc.adjust(DateTime(2017, 7, 30, 7, 35, 0)); //manual adjustment
+  //rtc.adjust(DateTime(2017, 7, 30, 7, 35, 0)); //manual adjustment
 
   pinMode(8, INPUT);
   pinMode(9, INPUT);
@@ -86,11 +86,23 @@ void check_buttons(){
 //Adds a second to the RTC time.
 void add_sec(){
   rtc.adjust(DateTime(rtc.now().unixtime() + 1));
+    Serial.print(rtc.now().hour(), DEC);
+    Serial.print(':');
+    Serial.print(rtc.now().minute(), DEC);
+    Serial.print(':');
+    Serial.print(rtc.now().second(), DEC);
+    Serial.println();
 }
 
 //Subtracts a second from the RTC time.
 void sub_sec(){
   rtc.adjust(DateTime(rtc.now().unixtime() - 1));
+    Serial.print(rtc.now().hour(), DEC);
+    Serial.print(':');
+    Serial.print(rtc.now().minute(), DEC);
+    Serial.print(':');
+    Serial.print(rtc.now().second(), DEC);
+    Serial.println();
 }
 
 //Returns integer value of the minute.
