@@ -49,6 +49,7 @@ void loop() {
       break;
     case 4: // Numerical time display
       display_ms(grid.Color(255, 255, 255), rainbow());
+      check_buttons(&state);
       break;
     case 11: // Clock edit - seconds
       display_ms(grid.Color(255, 255, 255), flash_color(grid.Color(255, 255, 255), grid.Color(255, 0, 0), 100));

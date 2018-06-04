@@ -83,7 +83,7 @@ byte up_held(byte state){
       //code
       break;
     case 4: // Numbered time - ms
-      //code
+      state = 0; // return to normal clock
       break;
     case 11: // Edit - seconds
       //code
@@ -146,7 +146,7 @@ byte down_held(byte state){
       state = 0; // exit to regular clock
       break;
     case 4: // Numbered time - ms
-      state = 0; // exit to regular clock
+      //code
       break;
     case 11: // Edit - seconds
       state = 1; // exit to seconds menu
