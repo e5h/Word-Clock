@@ -98,3 +98,171 @@ void test_words(uint32_t c, int t){
   wipe(t);
   
 }
+
+// Tests the numerical numbers
+void animate_numbers(uint32_t c, byte num, int d){
+  if(num >= 1){
+    for(byte col = 0; col <= 50; col+=10){
+      for(byte row = 0; row <= 5; row++){
+        wipe();
+        n_0(c, col+row);
+        grid.show();
+        delay(d);
+      }
+    }
+  }
+    if(num >= 2){
+    for(byte col = 0; col <= 50; col+=10){
+      for(byte row = 0; row <= 5; row++){
+        wipe();
+        n_1(c, col+row);
+        grid.show();
+        delay(d);
+      }
+    }
+  }
+    if(num >= 3){
+    for(byte col = 0; col <= 50; col+=10){
+      for(byte row = 0; row <= 5; row++){
+        wipe();
+        n_2(c, col+row);
+        grid.show();
+        delay(d);
+      }
+    }
+  }
+    if(num >= 4){
+    for(byte col = 0; col <= 50; col+=10){
+      for(byte row = 0; row <= 5; row++){
+        wipe();
+        n_3(c, col+row);
+        grid.show();
+        delay(d);
+      }
+    }
+  }
+    if(num >= 5){
+    for(byte col = 0; col <= 50; col+=10){
+      for(byte row = 0; row <= 5; row++){
+        wipe();
+        n_4(c, col+row);
+        grid.show();
+        delay(d);
+      }
+    }
+  }
+    if(num >= 6){
+    for(byte col = 0; col <= 50; col+=10){
+      for(byte row = 0; row <= 5; row++){
+        wipe();
+        n_5(c, col+row);
+        grid.show();
+        delay(d);
+      }
+    }
+  }
+    if(num >= 7){
+    for(byte col = 0; col <= 50; col+=10){
+      for(byte row = 0; row <= 5; row++){
+        wipe();
+        n_6(c, col+row);
+        grid.show();
+        delay(d);
+      }
+    }
+  }
+    if(num >= 8){
+    for(byte col = 0; col <= 50; col+=10){
+      for(byte row = 0; row <= 5; row++){
+        wipe();
+        n_7(c, col+row);
+        grid.show();
+        delay(d);
+      }
+    }
+  }
+    if(num >= 9){
+    for(byte col = 0; col <= 50; col+=10){
+      for(byte row = 0; row <= 5; row++){
+        wipe();
+        n_8(c, col+row);
+        grid.show();
+        delay(d);
+      }
+    }
+  }
+    if(num >= 10){
+    for(byte col = 0; col <= 50; col+=10){
+      for(byte row = 0; row <= 5; row++){
+        wipe();
+        n_9(c, col+row);
+        grid.show();
+        delay(d);
+      }
+    }
+  }
+}
+
+void test_numbers(uint32_t c, byte num, int d){
+  if(num >= 1){
+    wipe();
+    n_0(c, 0);
+    grid.show();
+    delay(d);
+  }
+  if(num >= 2){
+    wipe();
+    n_1(c, 0);
+    grid.show();
+    delay(d);
+  }
+  if(num >= 3){
+    wipe();
+    n_2(c, 0);
+    grid.show();
+    delay(d);
+  }
+  if(num >= 4){
+    wipe();
+    n_3(c, 0);
+    grid.show();
+    delay(d);
+  }
+  if(num >= 5){
+    wipe();
+    n_4(c, 0);
+    grid.show();
+    delay(d);
+  }
+  if(num >= 6){
+    wipe();
+    n_5(c, 0);
+    grid.show();
+    delay(d);
+  }
+  if(num >= 7){
+    wipe();
+    n_6(c, 0);
+    grid.show();
+    delay(d);
+  }
+  if(num >= 8){
+    wipe();
+    n_7(c, 0);
+    grid.show();
+    delay(d);
+  }
+  if(num >= 9){
+    wipe();
+    n_8(c, 0);
+    grid.show();
+    delay(d);
+  }
+  if(num >= 10){
+    wipe();
+    n_9(c, 0);
+    grid.show();
+    delay(d);
+  }
+}
+

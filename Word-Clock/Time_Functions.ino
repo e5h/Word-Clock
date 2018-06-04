@@ -67,6 +67,13 @@ void sub_hour(){
     Serial.println();
 }
 
+//Returns integer value of the second.
+int get_sec(void){
+  int s;
+  s = (int)rtc.now().second();
+  return s;
+}
+
 //Returns integer value of the minute.
 int get_min(void){
   int m;

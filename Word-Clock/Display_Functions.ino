@@ -178,11 +178,61 @@ void display_hour(int h, uint32_t c){
 }
 
 // Numerically display minutes and seconds
-void display_ms(uint32_t c){
-  
+void display_ms(uint32_t tc, uint32_t bc){
+  int m = get_min();
+  int s = get_sec();
+  display_num(tc, (m/10), 55); // top left
+  display_num(tc, (m%10), 05); // top right
+  display_num(bc, (s/10), 50); // bottom left
+  display_num(bc, (s%10), 00); // bottom right
 }
 
 // Numerically display hours and minutes
-void display_hm(uint32_t c){
-  
+void display_hm(uint32_t tc, uint32_t bc){
+  int h = get_hour();
+  int m = get_min();
+  display_num(tc, (h/10), 55); // top left
+  display_num(tc, (h%10), 05); // top right
+  display_num(bc, (m/10), 50); // bottom left
+  display_num(bc, (m%10), 00); // bottom right
 }
+
+//displays the number specified
+void display_num(uint32_t c, byte num, byte origin){
+  switch (num){
+    case 0:
+      n_0(c, origin);
+      break;
+    case 1:
+      n_1(c, origin);
+      break;
+    case 2:
+      n_2(c, origin);
+      break;
+    case 3:
+      n_3(c, origin);
+      break;
+    case 4:
+      n_4(c, origin);
+      break;
+    case 5:
+      n_5(c, origin);
+      break;
+    case 6:
+      n_6(c, origin);
+      break;
+    case 7:
+      n_7(c, origin);
+      break;
+    case 8:
+      n_8(c, origin);
+      break;
+    case 9:
+      n_9(c, origin);
+      break;
+    default:
+      Serial.println("Invalid!");
+      break;
+  }
+}
+

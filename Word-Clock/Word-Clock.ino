@@ -47,21 +47,25 @@ void loop() {
       H(grid.Color(255, 0, 0));
       check_buttons(&state);
       break;
+    case 4: // Numerical time display
+      display_ms(grid.Color(0, 255, 100), rainbow());
+      break;
     case 11: // Clock edit - seconds
       //display time in numerical m/s
-      S(grid.Color(255, 0, 255));//PLACEHOLDER
+      display_ms(grid.Color(255, 255, 255), grid.Color(255, 0, 0));
       check_buttons(&state);
       break;
     case 12: // Clock edit - minutes
       //display time in numerical m/s
-      M(grid.Color(255, 0, 255));//PLACEHOLDER
+      display_ms(grid.Color(255, 0, 0), grid.Color(255, 255, 255));
       check_buttons(&state);
       break;
     case 13: // Clock edit - hours
       //display time in numerical h/m
-      H(grid.Color(255, 0, 255));//PLACEHOLDER
+      display_hm(grid.Color(255, 0, 0), grid.Color(255, 255, 255));
       check_buttons(&state);
       break;
+      
   }
   grid.show();
 }

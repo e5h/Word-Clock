@@ -109,8 +109,6 @@ void H(uint32_t c){
  * The math for these number is very stupid due to the orientation
  * of the RGB pixel grid. The helper functions above are used to 
  * create a virtual coordinate system which is easier to plan around.
- * 
- * http://www.pickafont.com/fonts/5x5%20Dots.html
  */
 
 void n_0(uint32_t c, byte origin){
@@ -120,25 +118,150 @@ void n_0(uint32_t c, byte origin){
   grid.setPixelColor(point_unmirror(origin+03), c);
   grid.setPixelColor(point_unmirror(origin+10), c);
   grid.setPixelColor(point_unmirror(origin+20), c);
-  grid.setPixelColor(point_unmirror(origin+30), c);
   grid.setPixelColor(point_unmirror(origin+14), c);
   grid.setPixelColor(point_unmirror(origin+24), c);
-  grid.setPixelColor(point_unmirror(origin+34), c);
-  grid.setPixelColor(point_unmirror(origin+41), c);
-  grid.setPixelColor(point_unmirror(origin+42), c);
-  grid.setPixelColor(point_unmirror(origin+43), c);
+  grid.setPixelColor(point_unmirror(origin+31), c);
+  grid.setPixelColor(point_unmirror(origin+32), c);
+  grid.setPixelColor(point_unmirror(origin+33), c);
 }
 
 void n_1(uint32_t c, byte origin){
   origin = origin_fit(origin);
+  grid.setPixelColor(point_unmirror(origin+00), c);
   grid.setPixelColor(point_unmirror(origin+10), c);
   grid.setPixelColor(point_unmirror(origin+20), c);
   grid.setPixelColor(point_unmirror(origin+30), c);
-  grid.setPixelColor(point_unmirror(origin+21), c);
-  grid.setPixelColor(point_unmirror(origin+22), c);
-  grid.setPixelColor(point_unmirror(origin+23), c);
+  grid.setPixelColor(point_unmirror(origin+11), c);
+  grid.setPixelColor(point_unmirror(origin+12), c);
+  grid.setPixelColor(point_unmirror(origin+13), c);
+  grid.setPixelColor(point_unmirror(origin+14), c);
   grid.setPixelColor(point_unmirror(origin+24), c);
+  //grid.setPixelColor(point_unmirror(origin+34), c);
+}
+
+void n_2(uint32_t c, byte origin){
+  origin = origin_fit(origin);
+  grid.setPixelColor(point_unmirror(origin), c);
+  grid.setPixelColor(point_unmirror(origin+10), c);
+  grid.setPixelColor(point_unmirror(origin+20), c);
+  grid.setPixelColor(point_unmirror(origin+30), c);
+  grid.setPixelColor(point_unmirror(origin+31), c);
+  grid.setPixelColor(point_unmirror(origin+22), c);
+  grid.setPixelColor(point_unmirror(origin+12), c);
+  grid.setPixelColor(point_unmirror(origin+02), c);
+  grid.setPixelColor(point_unmirror(origin+03), c);
+  grid.setPixelColor(point_unmirror(origin+14), c);
+  grid.setPixelColor(point_unmirror(origin+24), c);
+  grid.setPixelColor(point_unmirror(origin+34), c);
+}
+
+void n_3(uint32_t c, byte origin){
+  origin = origin_fit(origin);
+  //grid.setPixelColor(point_unmirror(origin), c);
+  grid.setPixelColor(point_unmirror(origin+10), c);
+  grid.setPixelColor(point_unmirror(origin+20), c);
+  grid.setPixelColor(point_unmirror(origin+30), c);
+  grid.setPixelColor(point_unmirror(origin+01), c);
+  //grid.setPixelColor(point_unmirror(origin+02), c);
+  grid.setPixelColor(point_unmirror(origin+03), c);
+  //grid.setPixelColor(point_unmirror(origin+04), c);
+  grid.setPixelColor(point_unmirror(origin+12), c);
+  grid.setPixelColor(point_unmirror(origin+22), c);
+  grid.setPixelColor(point_unmirror(origin+32), c);
+  grid.setPixelColor(point_unmirror(origin+14), c);
+  grid.setPixelColor(point_unmirror(origin+24), c);
+  grid.setPixelColor(point_unmirror(origin+34), c);
+}
+
+void n_4(uint32_t c, byte origin){
+  origin = origin_fit(origin);
+  grid.setPixelColor(point_unmirror(origin+02), c);
+  grid.setPixelColor(point_unmirror(origin+10), c);
+  grid.setPixelColor(point_unmirror(origin+11), c);
+  grid.setPixelColor(point_unmirror(origin+12), c);
+  grid.setPixelColor(point_unmirror(origin+13), c);
+  grid.setPixelColor(point_unmirror(origin+14), c);
+  grid.setPixelColor(point_unmirror(origin+12), c);
+  grid.setPixelColor(point_unmirror(origin+22), c);
+  grid.setPixelColor(point_unmirror(origin+32), c);
   grid.setPixelColor(point_unmirror(origin+33), c);
+  grid.setPixelColor(point_unmirror(origin+34), c);
+}
+
+void n_5(uint32_t c, byte origin){
+  origin = origin_fit(origin);
+  grid.setPixelColor(point_unmirror(origin+10), c);
+  grid.setPixelColor(point_unmirror(origin+20), c);
+  grid.setPixelColor(point_unmirror(origin+30), c);
+  grid.setPixelColor(point_unmirror(origin+01), c);
+  grid.setPixelColor(point_unmirror(origin+12), c);
+  grid.setPixelColor(point_unmirror(origin+22), c);
+  grid.setPixelColor(point_unmirror(origin+32), c);
+  grid.setPixelColor(point_unmirror(origin+33), c);
+  grid.setPixelColor(point_unmirror(origin+34), c);
+  grid.setPixelColor(point_unmirror(origin+24), c);
+  grid.setPixelColor(point_unmirror(origin+14), c);
+  grid.setPixelColor(point_unmirror(origin+04), c);
+}
+
+void n_6(uint32_t c, byte origin){
+  origin = origin_fit(origin);
+  grid.setPixelColor(point_unmirror(origin+10), c);
+  grid.setPixelColor(point_unmirror(origin+20), c);
+  grid.setPixelColor(point_unmirror(origin+01), c);
+  grid.setPixelColor(point_unmirror(origin+31), c);
+  grid.setPixelColor(point_unmirror(origin+12), c);
+  grid.setPixelColor(point_unmirror(origin+22), c);
+  grid.setPixelColor(point_unmirror(origin+32), c);
+  grid.setPixelColor(point_unmirror(origin+33), c);
+  grid.setPixelColor(point_unmirror(origin+24), c);
+  grid.setPixelColor(point_unmirror(origin+14), c);
+}
+
+void n_7(uint32_t c, byte origin){
+  origin = origin_fit(origin);
+  grid.setPixelColor(point_unmirror(origin+10), c);
+  grid.setPixelColor(point_unmirror(origin+11), c);
+  grid.setPixelColor(point_unmirror(origin+12), c);
+  grid.setPixelColor(point_unmirror(origin+03), c);
+  grid.setPixelColor(point_unmirror(origin+04), c);
+  grid.setPixelColor(point_unmirror(origin+14), c);
+  grid.setPixelColor(point_unmirror(origin+24), c);
+  grid.setPixelColor(point_unmirror(origin+34), c);
+}
+
+void n_8(uint32_t c, byte origin){
+  origin = origin_fit(origin);
+  grid.setPixelColor(point_unmirror(origin+10), c);
+  grid.setPixelColor(point_unmirror(origin+20), c);
+  grid.setPixelColor(point_unmirror(origin+01), c);
+  grid.setPixelColor(point_unmirror(origin+31), c);
+  grid.setPixelColor(point_unmirror(origin+12), c);
+  grid.setPixelColor(point_unmirror(origin+22), c);
+  grid.setPixelColor(point_unmirror(origin+03), c);
+  grid.setPixelColor(point_unmirror(origin+33), c);
+  grid.setPixelColor(point_unmirror(origin+14), c);
+  grid.setPixelColor(point_unmirror(origin+24), c);
+  //grid.setPixelColor(point_unmirror(origin+00), c);
+  //grid.setPixelColor(point_unmirror(origin+30), c);
+  //grid.setPixelColor(point_unmirror(origin+02), c);
+  //grid.setPixelColor(point_unmirror(origin+32), c);
+  //grid.setPixelColor(point_unmirror(origin+04), c);
+  //grid.setPixelColor(point_unmirror(origin+34), c);
+}
+
+void n_9(uint32_t c, byte origin){
+  origin = origin_fit(origin);
+  grid.setPixelColor(point_unmirror(origin+10), c);
+  grid.setPixelColor(point_unmirror(origin+20), c);
+  grid.setPixelColor(point_unmirror(origin+01), c);
+  grid.setPixelColor(point_unmirror(origin+02), c);
+  grid.setPixelColor(point_unmirror(origin+03), c);
+  grid.setPixelColor(point_unmirror(origin+12), c);
+  grid.setPixelColor(point_unmirror(origin+22), c);
+  grid.setPixelColor(point_unmirror(origin+33), c);
+  grid.setPixelColor(point_unmirror(origin+24), c);
+  grid.setPixelColor(point_unmirror(origin+14), c);
 }
 
 // Words:
