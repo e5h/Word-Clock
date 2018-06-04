@@ -17,6 +17,39 @@
  * 99-----------------0-
  */
 
+// Helper functions
+/*
+ * These two functions are used to convert the snake-like
+ * coordinate system above into a virtual system, which
+ * uses a 2 digit number as a [x][y] offset in the negative
+ * direction for x.
+ * ORIGIN - virtual
+ */
+
+// Turns virtual -> actual coordinate.
+byte point_unmirror(byte vpoint){
+  byte column = vpoint/10;
+  byte row = vpoint%10;
+  if(column%2 != 0){
+    row = 9 - row;
+  }
+  return (10*column) + row;
+}
+
+// This function will automatically take a
+// virtual origin, and make sure it fits
+byte origin_fit(byte vpoint){
+  byte column = vpoint/10;
+  byte row = vpoint%10;
+  if(column > 5){
+    column = 5;
+  }
+  if(row > 5){
+    row = 5;
+  }
+  return (10*column) + row;
+}
+
 // Big Letters / Numbers:
 
 void S(uint32_t c){
@@ -74,27 +107,38 @@ void H(uint32_t c){
 // 5x5 pixel numbers (require bottom right origin point):
 /*
  * The math for these number is very stupid due to the orientation
- * of the RGB pixel grid. They have to be calculated with respect
- * to both the rows and colums.
+ * of the RGB pixel grid. The helper functions above are used to 
+ * create a virtual coordinate system which is easier to plan around.
+ * 
+ * http://www.pickafont.com/fonts/5x5%20Dots.html
  */
 
+void n_0(uint32_t c, byte origin){
+  origin = origin_fit(origin);
+  grid.setPixelColor(point_unmirror(origin+01), c);
+  grid.setPixelColor(point_unmirror(origin+02), c);
+  grid.setPixelColor(point_unmirror(origin+03), c);
+  grid.setPixelColor(point_unmirror(origin+10), c);
+  grid.setPixelColor(point_unmirror(origin+20), c);
+  grid.setPixelColor(point_unmirror(origin+30), c);
+  grid.setPixelColor(point_unmirror(origin+14), c);
+  grid.setPixelColor(point_unmirror(origin+24), c);
+  grid.setPixelColor(point_unmirror(origin+34), c);
+  grid.setPixelColor(point_unmirror(origin+41), c);
+  grid.setPixelColor(point_unmirror(origin+42), c);
+  grid.setPixelColor(point_unmirror(origin+43), c);
+}
+
 void n_1(uint32_t c, byte origin){
-  if( ((origin/10)%2 == 0) ){ // Even column
-    grid.setPixelColor(origin+20, c);
-    grid.setPixelColor(origin+20+1, c);
-    grid.setPixelColor(origin+20+2, c);
-    grid.setPixelColor(origin+20+3, c);
-    grid.setPixelColor(origin+20+4, c);
-    grid.setPixelColor(origin, c);
-  }
-  else{ // Odd column?
-    grid.setPixelColor(origin+20, c);
-    grid.setPixelColor(origin+20-1, c);
-    grid.setPixelColor(origin+20-2, c);
-    grid.setPixelColor(origin+20-3, c);
-    grid.setPixelColor(origin+20-4, c);
-    grid.setPixelColor(origin+25, c);
-  }
+  origin = origin_fit(origin);
+  grid.setPixelColor(point_unmirror(origin+10), c);
+  grid.setPixelColor(point_unmirror(origin+20), c);
+  grid.setPixelColor(point_unmirror(origin+30), c);
+  grid.setPixelColor(point_unmirror(origin+21), c);
+  grid.setPixelColor(point_unmirror(origin+22), c);
+  grid.setPixelColor(point_unmirror(origin+23), c);
+  grid.setPixelColor(point_unmirror(origin+24), c);
+  grid.setPixelColor(point_unmirror(origin+33), c);
 }
 
 // Words:
