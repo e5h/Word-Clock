@@ -24,11 +24,11 @@ void check_buttons(byte *state){
       }
       if(held){ // If the button is held
         Serial.println("Up button held!");
-        *state = up_held(state);
+        *state = up_held(*state);
       }
       else{ // If the button is tapped
         Serial.println("Up button tapped.");
-        *state = up_tapped(state);
+        *state = up_tapped(*state);
       }
     }
 
@@ -45,11 +45,11 @@ void check_buttons(byte *state){
       }
       if(held){ // If the button is held
         Serial.println("Down button held!");
-        *state = down_held(state);
+        *state = down_held(*state);
       }
       else{ // If the button is tapped
         Serial.println("Down button tapped!");
-        *state = down_tapped(state);
+        *state = down_tapped(*state);
       }
     }
   }

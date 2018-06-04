@@ -24,11 +24,15 @@ void S(uint32_t c){
   grid.setPixelColor(69, c);
   grid.setPixelColor(70, c);
   grid.setPixelColor(89, c);
+  grid.setPixelColor(90, c);
   grid.setPixelColor(91, c);
+  grid.setPixelColor(92, c);
   grid.setPixelColor(87, c);
   grid.setPixelColor(72, c);
   grid.setPixelColor(67, c);
+  grid.setPixelColor(52, c);
   grid.setPixelColor(53, c);
+  grid.setPixelColor(54, c);
   grid.setPixelColor(65, c);
   grid.setPixelColor(74, c);
   grid.setPixelColor(85, c);
@@ -67,11 +71,34 @@ void H(uint32_t c){
   grid.setPixelColor(59, c);
 }
 
+// 5x5 pixel numbers (require bottom right origin point):
+/*
+ * The math for these number is very stupid due to the orientation
+ * of the RGB pixel grid. They have to be calculated with respect
+ * to both the rows and colums.
+ */
+
 void n_1(uint32_t c, byte origin){
-  // need to figure out the math here
+  if( ((origin/10)%2 == 0) ){ // Even column
+    grid.setPixelColor(origin+20, c);
+    grid.setPixelColor(origin+20+1, c);
+    grid.setPixelColor(origin+20+2, c);
+    grid.setPixelColor(origin+20+3, c);
+    grid.setPixelColor(origin+20+4, c);
+    grid.setPixelColor(origin, c);
+  }
+  else{ // Odd column?
+    grid.setPixelColor(origin+20, c);
+    grid.setPixelColor(origin+20-1, c);
+    grid.setPixelColor(origin+20-2, c);
+    grid.setPixelColor(origin+20-3, c);
+    grid.setPixelColor(origin+20-4, c);
+    grid.setPixelColor(origin+25, c);
+  }
 }
 
 // Words:
+
 void it(uint32_t c){
   grid.setPixelColor(90, c);
   grid.setPixelColor(89, c);

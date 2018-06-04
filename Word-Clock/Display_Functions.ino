@@ -135,9 +135,13 @@ void display_time(uint32_t c, uint32_t hc){
 
 //Takes a numeric hour, and displays the corresponding word.
 void display_hour(int h, uint32_t c){
-  if(h > 12)
+  if(h >= 12){
     h -= 12;
+  }
   
+  if(h == 0){
+    twelve(c);
+  }
   if(h == 1){
     one(c);
   }
@@ -170,9 +174,6 @@ void display_hour(int h, uint32_t c){
   }
   if(h == 11){
     eleven(c);
-  }
-  if(h == 12){
-    twelve(c);
   }
 }
 
