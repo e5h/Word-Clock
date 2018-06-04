@@ -70,7 +70,7 @@ void check_buttons(byte *state){
 byte up_held(byte state){
   switch(state){
     case 0: // Regular clock functionality
-      //swap to numbered clock?
+      state = 4; // swap to numbered time
       //code
       break;
     case 1: // Menu - seconds
@@ -80,6 +80,9 @@ byte up_held(byte state){
       //code
       break;
     case 3: // Menu - hours
+      //code
+      break;
+    case 4: // Numbered time - ms
       //code
       break;
     case 11: // Edit - seconds
@@ -111,6 +114,9 @@ byte up_tapped(byte state){
     case 3: // Menu - hours
       state = 13; // begin editing in hours
       break;
+    case 4: // Numbered time - ms
+      //code
+      break;
     case 11: // Edit - seconds
       add_sec(); // add a second
       break;
@@ -137,6 +143,9 @@ byte down_held(byte state){
       state = 0; // exit to regular clock
       break;
     case 3: // Menu - hours
+      state = 0; // exit to regular clock
+      break;
+    case 4: // Numbered time - ms
       state = 0; // exit to regular clock
       break;
     case 11: // Edit - seconds
@@ -167,6 +176,9 @@ byte down_tapped(byte state){
       break;
     case 3: // Menu - hours
       state = 1; // go to seconds menu
+      break;
+    case 4: // Numbered time - ms
+      //code
       break;
     case 11: // Edit - seconds
       sub_sec(); // subtract a second

@@ -24,6 +24,23 @@ void display_bday(){
   }
 }
 
+uint32_t flash_color(uint32_t c1, uint32_t c2, int d){
+  static unsigned long last_time = 0;
+  static byte color = 1;
+
+  if(millis() - last_time > d){
+    last_time = millis();
+    if(color == 1){
+      color = 2;
+      return c2;
+    }
+    else{
+      color = 1;
+      return c1;
+    }
+  }
+}
+
 //Cycles through RGB values.
 uint32_t rainbow(){
   static unsigned long last_time = 0;

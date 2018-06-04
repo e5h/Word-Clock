@@ -48,21 +48,18 @@ void loop() {
       check_buttons(&state);
       break;
     case 4: // Numerical time display
-      display_ms(grid.Color(0, 255, 100), rainbow());
+      display_ms(grid.Color(255, 255, 255), rainbow());
       break;
     case 11: // Clock edit - seconds
-      //display time in numerical m/s
-      display_ms(grid.Color(255, 255, 255), grid.Color(255, 0, 0));
+      display_ms(grid.Color(255, 255, 255), flash_color(grid.Color(255, 255, 255), grid.Color(255, 0, 0), 100));
       check_buttons(&state);
       break;
     case 12: // Clock edit - minutes
-      //display time in numerical m/s
-      display_ms(grid.Color(255, 0, 0), grid.Color(255, 255, 255));
+      display_ms(flash_color(grid.Color(255, 255, 255), grid.Color(255, 0, 0), 100), grid.Color(255, 255, 255));
       check_buttons(&state);
       break;
     case 13: // Clock edit - hours
-      //display time in numerical h/m
-      display_hm(grid.Color(255, 0, 0), grid.Color(255, 255, 255));
+      display_hm(flash_color(grid.Color(255, 255, 255), grid.Color(255, 0, 0), 100), grid.Color(255, 255, 255));
       check_buttons(&state);
       break;
       
