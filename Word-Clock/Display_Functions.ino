@@ -24,11 +24,64 @@ void display_bday(){
   }
 }
 
+//Storage for the various colors used in the display
+uint32_t colors(byte i){
+  static uint32_t c_arr[13]{
+    grid.Color(255, 255, 255), // white (default)
+    grid.Color(255, 0, 0), // red
+    grid.Color(255, 128, 0), // orange
+    grid.Color(255, 255, 0), // yellow
+    grid.Color(128, 255, 0), // lime
+    grid.Color(0, 255, 0), // green
+    grid.Color(0, 255, 128), // mint
+    grid.Color(0, 255, 255), // turquoise
+    grid.Color(0, 128, 255), // light blue
+    grid.Color(0, 0, 255), // blue
+    grid.Color(128, 0, 255), // purple
+    grid.Color(255, 0, 255), // pink
+    grid.Color(255, 0, 128), // hot pink
+  };
+  if(i < 13){
+    return c_arr[i];
+  }
+  else{
+    switch(i){
+      case 13:
+        return rainbow();
+    }
+  }
+}
+
+// Cycles to the next top color
+void nextTopColor(){
+  top_color++;
+  if(top_color > 13 || top_color < 0){
+    top_color = 0;
+  }
+  colors_saved = false;
+}
+
+// Cycles to the next bottom color
+void nextBottomColor(){
+  bottom_color++;
+  if(bottom_color > 13 || bottom_color < 0){
+    bottom_color = 0;
+  }
+  colors_saved = false;
+}
+
+// Saves the current color scheme
+void saveColors(){
+  EEPROM.write(0, top_color);
+  EEPROM.write(1, bottom_color);
+  colors_saved = true;
+}
+
 uint32_t flash_color(uint32_t c1, uint32_t c2, int d){
-  static unsigned long last_time = 0;
+  static unsigned long last_time;
   static byte color = 1;
 
-  if(millis() - last_time > d){
+  if(millis() - last_time > d){ // if timer is reached, designate new color
     last_time = millis();
     if(color == 1){
       color = 2;
@@ -39,6 +92,15 @@ uint32_t flash_color(uint32_t c1, uint32_t c2, int d){
       return c1;
     }
   }
+  else{ // if timer is not reached, return current color
+    if(color == 1){
+      return c1;
+    }
+    else{
+      return c2;
+    }
+  }
+  
 }
 
 //Cycles through RGB values.
@@ -198,9 +260,9 @@ void display_hour(int h, uint32_t c){
 void display_ms(uint32_t tc, uint32_t bc){
   int m = get_min();
   int s = get_sec();
-  display_num(tc, (m/10), 55); // top left
+  display_num(tc, (m/10), 65); // top left
   display_num(tc, (m%10), 05); // top right
-  display_num(bc, (s/10), 50); // bottom left
+  display_num(bc, (s/10), 60); // bottom left
   display_num(bc, (s%10), 00); // bottom right
 }
 
@@ -208,9 +270,9 @@ void display_ms(uint32_t tc, uint32_t bc){
 void display_hm(uint32_t tc, uint32_t bc){
   int h = get_hour();
   int m = get_min();
-  display_num(tc, (h/10), 55); // top left
+  display_num(tc, (h/10), 65); // top left
   display_num(tc, (h%10), 05); // top right
-  display_num(bc, (m/10), 50); // bottom left
+  display_num(bc, (m/10), 60); // bottom left
   display_num(bc, (m%10), 00); // bottom right
 }
 

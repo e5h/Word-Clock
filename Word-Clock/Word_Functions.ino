@@ -41,8 +41,8 @@ byte point_unmirror(byte vpoint){
 byte origin_fit(byte vpoint){
   byte column = vpoint/10;
   byte row = vpoint%10;
-  if(column > 5){
-    column = 5;
+  if(column > 6){
+    column = 6;
   }
   if(row > 5){
     row = 5;
@@ -102,6 +102,16 @@ void H(uint32_t c){
   grid.setPixelColor(57, c);
   grid.setPixelColor(58, c);
   grid.setPixelColor(59, c);
+}
+
+void little_C(uint32_t c){
+  grid.setPixelColor(18, c);
+  grid.setPixelColor(21, c);
+  grid.setPixelColor(38, c);
+  grid.setPixelColor(37, c);
+  grid.setPixelColor(36, c);
+  grid.setPixelColor(23, c);
+  grid.setPixelColor(16, c);
 }
 
 // 5x5 pixel numbers (require bottom right origin point):

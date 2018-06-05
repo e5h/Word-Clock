@@ -74,25 +74,25 @@ byte up_held(byte state){
       //code
       break;
     case 1: // Menu - seconds
-      //code
+      saveColors();
       break;
     case 2: // Menu - minutes
-      //code
+      saveColors();
       break;
     case 3: // Menu - hours
-      //code
+      saveColors();
       break;
     case 4: // Numbered time - ms
       state = 0; // return to normal clock
       break;
     case 11: // Edit - seconds
-      //code
+      state = 12; // edit minutes
       break;
     case 12: // Edit - minutes
-      //code
+      state = 13; // edit hours
       break;
     case 13: // Edit - hours
-      //code
+      state = 11; // edit seconds
       break;
   }
   return state;
@@ -103,7 +103,7 @@ byte up_tapped(byte state){
   switch(state){
     case 0: // Regular clock functionality
       Serial.println("Top color cycled.");//PLACEHOLDER
-      //change the color of the top
+      nextTopColor();
       break;
     case 1: // Menu - seconds
       state = 11; // begin editing in seconds
@@ -115,7 +115,7 @@ byte up_tapped(byte state){
       state = 13; // begin editing in hours
       break;
     case 4: // Numbered time - ms
-      //code
+      nextTopColor();
       break;
     case 11: // Edit - seconds
       add_sec(); // add a second
@@ -146,7 +146,7 @@ byte down_held(byte state){
       state = 0; // exit to regular clock
       break;
     case 4: // Numbered time - ms
-      //code
+      state = 1; // enter into seconds menu
       break;
     case 11: // Edit - seconds
       state = 1; // exit to seconds menu
@@ -166,7 +166,7 @@ byte down_tapped(byte state){
   switch(state){
     case 0: // Regular clock functionality
       Serial.println("Bottom color cycled.");//PLACEHOLDER
-      //change the color of the bottom
+      nextBottomColor();
       break;
     case 1: // Menu - seconds
       state = 2; // go to minutes menu
@@ -178,7 +178,7 @@ byte down_tapped(byte state){
       state = 1; // go to seconds menu
       break;
     case 4: // Numbered time - ms
-      //code
+      nextBottomColor();
       break;
     case 11: // Edit - seconds
       sub_sec(); // subtract a second
